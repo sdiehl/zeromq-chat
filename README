@@ -1,6 +1,10 @@
 Directions:
 ===========
 
+Install ZeroMQ:
+
+    $ apt-get install zeromq-bin 
+
 Build your virtualenv:
 
     $ cd zeromq-chat
