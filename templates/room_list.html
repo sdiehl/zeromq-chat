@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <title>Django + ZeroMQ + Gevent - Chat Room</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+        <script src="http://cdn.socket.io/stable/socket.io.js"></script>
+    </head>
+    <body>
+
+    <h1>Rooms</h1>
+    <form id="newroomform">
+        New Room:
+        <input id="newroomname"></input>
+        <input type="submit" value="Create"/>
+    </form>
+
+    <div id="rooms">
+    </div>
+
+    <script type="text/javascript">
+
+        // A lightweight Javscript template: 
+        // See https://github.com/ruidlopes/nanotemplatejs
+        String.prototype._tregex = /(\$\w+)/g;
+        String.prototype.template = String.prototype.t = function() {
+            if (arguments[0] instanceof Array)
+                return arguments[0].map(this.t, this).join("");
+            else {
+                var args = typeof arguments[0] === "object" ? arguments[0] : arguments;
+                return this.replace(this._tregex, function(match) { return args[match.substr(1)]; });
+            }
+        };
+
+        var ROOM_TEMPLATE = '<div><a href="/room/$0">$0</a></div>';
+
+        // Load the list of pre-existing rooms
+        var initial_rooms = {{ initial_rooms|safe }};
+
+        $(document).ready(function() {
+            // Show the list of pre-existing rooms
+            for(var i=0; i<initial_rooms.length; i++) {
+                var el = ROOM_TEMPLATE.t([initial_rooms[i]]);
+                $("#rooms").append(el);
+            }
+
+            $("#newroomform").submit(function() {
+                window.location = "/room/" + $("#newroomname").val(); 
+                return false;
+            });
+
+        });
+
+        // Listen for new room creations
+        socket = new io.Socket(null, {
+            port: {{ request.environ.SERVER_PORT }},
+            rememberTransport: false,
+            transports: ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling']
+        });
+
+        socket.connect();
+        socket.send("subscribe:rooms");
+
+        // When a room is created or deleted update the list
+        socket.on("message", function(obj) {
+            var el = '<div><a href="/room/$0">$0</a></div>'.t([obj.room_name]);
+            $("#rooms").append(el);
+        });
+
+    </script>
+    </body>
+</html>

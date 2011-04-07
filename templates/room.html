@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <title>Django + ZeroMQ + Gevent - Chat Room</title>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+        <script src="http://cdn.socket.io/stable/socket.io.js"></script>
+    </head>
+    <body>
+
+    <h1> {{ room_name }} </h1>
+
+    <form id="sender">
+    <input id="msgfield"></input>
+    <input type="submit" value="Send"/>
+    </form>
+
+    <script type="text/javascript">
+        ROOM_NAME = escape("{{ room_name }}");
+
+        /*
+        var socket = new io.Socket(null, {
+            port: {{ request.environ.SERVER_PORT }}, 
+            rememberTransport: false
+        });
+        */
+
+        socket = new io.Socket('localhost',
+            {
+            transports: ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling']
+            }
+        );
+
+        socket.connect();
+
+        socket.on("message", function(obj){
+            msg_div = $('<div></div>').text(obj.message);
+            $("body").append(msg_div);
+        });
+
+        $(document).ready(function() {
+            socket.send("subscribe:" + ROOM_NAME);
+
+            $("#sender").bind('submit', function(e) {
+                var msg = $("#msgfield").val();
+                send_message(ROOM_NAME, msg);
+                $("#msgfield").val('');
+                $("#msgfield").focus();
+                return false;
+            });
+        });
+
+        function send_message(room, msg) {
+            // Send a message to the room. 
+            // The sent message is of the form
+            // message:myroom,mytext
+            socket.send('message:' + room + ',' + msg);
+        }
+
+    </script>
+    </body>
+</html>

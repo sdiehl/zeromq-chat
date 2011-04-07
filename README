@@ -1,0 +1,18 @@
+Directions:
+===========
+
+Build your virtualenv:
+
+    $ cd zeromq-chat
+    $ virtualenv --no-site-packages env
+    $ source env/bin/activative
+
+Install neccesary packages:
+
+    $ pip install -r requirements.txt 
+
+Run:
+    
+    $ python run.py
+
+Point your browser to localhost:8080

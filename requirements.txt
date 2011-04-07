@@ -1,0 +1,6 @@
+hg+https://bitbucket.org/Jeffrey/gevent-websocket#egg=gevent-websocket
+hg+https://bitbucket.org/Jeffrey/gevent-socketio#egg=gevent-socketio
+git+https://github.com/traviscline/gevent-zeromq
+django==1.3
+gevent
+simplejson
