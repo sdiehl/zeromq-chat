@@ -20,7 +20,10 @@ def send_message(socket, room, text):
     socket.send_unicode("%s:%s" % (room, text))
 
 def message_listener(socketio, room):
-    context = zmq.Context()
+    # For too many threads spawning new connection will cause a
+    # "too many mailboxes" error, but for small amounts of
+    # threads this is fine.
+
     subscriber = context.socket(zmq.SUB)
     subscriber.connect("tcp://127.0.0.1:5000")
 
@@ -40,7 +43,10 @@ def new_room(socket, room_name):
     socket.send("room:%s" % str(room_name))
 
 def room_listener(socketio):
-    context = zmq.Context()
+    # For too many threads spawning new connection will cause a
+    # "too many mailboxes" error, but for small amounts of
+    # threads this is fine.
+
     subscriber = context.socket(zmq.SUB)
     subscriber.connect("tcp://127.0.0.1:5000")
     subscriber.setsockopt(zmq.SUBSCRIBE, 'room')

@@ -1,4 +1,3 @@
-# Django settings for TicTacToe project.
 import os
 
 PROJECT_ROOT = os.path.dirname(__file__)

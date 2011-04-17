@@ -16,7 +16,6 @@ PORT = 8080
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 application = django.core.handlers.wsgi.WSGIHandler()
 
-sys.path.insert(0, os.path.join(settings.PROJECT_ROOT, "../"))
 sys.path.insert(0, os.path.join(settings.PROJECT_ROOT, "apps"))
 
 if __name__ == '__main__':
