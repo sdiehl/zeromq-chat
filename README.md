@@ -3,8 +3,13 @@ Directions:
 
 Install ZeroMQ:
 
+For Ubuntu Linux
 
     $ apt-get install zeromq-bin libzmq-dev libzmq0
+
+For Arch Linux
+
+    $ pacman -S zeromq
 
 Build your virtualenv:
 
