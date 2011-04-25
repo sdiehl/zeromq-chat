@@ -3,7 +3,8 @@ Directions:
 
 Install ZeroMQ:
 
-    $ apt-get install zeromq-bin 
+
+    $ apt-get install zeromq-bin libzmq-dev libzmq0
 
 Build your virtualenv:
 
@@ -20,3 +21,11 @@ Run:
     $ python run.py
 
 Point your browser to localhost:8080
+
+Notes:
+=====
+
+You may need to install from a PPA if your version of Ubuntu does
+not carray libzmq >= 2.10. Such as:
+    
+    sudo add-apt-repository ppa:chris-lea/zeromq
