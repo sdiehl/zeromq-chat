@@ -24,11 +24,7 @@
         });
         */
 
-        socket = new io.Socket('localhost',
-            {
-            transports: ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling']
-            }
-        );
+        socket = new io.Socket( document.location.hostname );
 
         socket.connect();
 

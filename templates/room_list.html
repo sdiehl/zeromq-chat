@@ -50,11 +50,7 @@
         });
 
         // Listen for new room creations
-        socket = new io.Socket(null, {
-            port: {{ request.environ.SERVER_PORT }},
-            rememberTransport: false,
-            transports: ['websocket', 'htmlfile', 'xhr-multipart', 'xhr-polling', 'jsonp-polling']
-        });
+        socket = new io.Socket( document.location.hostname );
 
         socket.connect();
         socket.send("subscribe:rooms");
