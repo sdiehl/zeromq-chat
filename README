@@ -9,7 +9,7 @@ Build your virtualenv:
 
     $ cd zeromq-chat
     $ virtualenv --no-site-packages env
-    $ source env/bin/activative
+    $ source env/bin/activate
 
 Install neccesary packages:
 
