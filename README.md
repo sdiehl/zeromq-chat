@@ -34,3 +34,8 @@ You may need to install from a PPA if your version of Ubuntu does
 not carray libzmq >= 2.10. Such as:
     
     sudo add-apt-repository ppa:chris-lea/zeromq
+
+License:
+========
+
+Released under a MIT License.
